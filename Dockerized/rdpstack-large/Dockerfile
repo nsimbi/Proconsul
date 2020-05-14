@@ -74,6 +74,7 @@ WORKDIR /tmp
 RUN git clone https://github.com/FreeRDP/FreeRDP
 WORKDIR /tmp/FreeRDP
 ADD nla-patch /tmp/nla-patch
+ADD cmake-3.17.2 /tmp/FreeRDP
 #RUN patch -p1 < /tmp/nla-patch
 
 RUN yum clean all
@@ -95,7 +96,8 @@ RUN yum install -y libXi-devel
 RUN yum install -y alsa-lib
 RUN yum install -y alsa-lib-devel
 WORKDIR /tmp/FreeRDP
-RUN cmake -DCMAKE_BUILD_TYPE=Release -DWITH_SSE2=ON
+RUN ./bootstrap
+#RUN cmake -DCMAKE_BUILD_TYPE=Release -DWITH_SSE2=ON
 RUN make
 RUN make install
 
